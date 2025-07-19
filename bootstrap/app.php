@@ -10,6 +10,7 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__ . '/../routes/api.php',
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
+        livewire: '/livewire',
     )
     ->withMiddleware(function (Middleware $middleware) {
         // ✅ Add web middleware group (important for sessions, CSRF, Filament)
