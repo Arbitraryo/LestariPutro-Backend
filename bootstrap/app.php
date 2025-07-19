@@ -7,17 +7,22 @@ use Illuminate\Foundation\Configuration\Middleware;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
-        api: __DIR__ . '/../routes/api.php',  // <-- TAMBAHKAN INI
+        api: __DIR__ . '/../routes/api.php',
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Konfigurasi middleware untuk API dengan JWT
-        $middleware->api(prepend: [
-            // Tidak perlu Sanctum middleware untuk JWT
+        // ✅ Add web middleware group (important for sessions, CSRF, Filament)
+        $middleware->web(append: [
+            \Illuminate\Cookie\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
         ]);
 
-        // JWT middleware akan otomatis ditangani oleh guard 'api' di config/auth.php
+        $middleware->api(prepend: [
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
