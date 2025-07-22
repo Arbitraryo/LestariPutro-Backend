@@ -113,4 +113,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function canAccessAdminPanel(): bool
+    {
+        return str_ends_with($this->email, '@admin.com') && $this->hasVerifiedEmail();
+    }
 }
