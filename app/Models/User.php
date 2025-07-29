@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use Filament\Panel;
+// use Filament\Panel;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Database\Eloquent\Relations\HasMany; // <--- PASTIKAN INI ADA
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 use Illuminate\Support\Str;
@@ -116,9 +116,9 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function canAccessAdminPanel(): bool
-    {
-        // return str_ends_with($this->email, '@admin.com') && $this->hasVerifiedEmail();
-        return true;
-    }
+    // public function canAccessAdminPanel(): bool
+    // {
+    //     // return str_ends_with($this->email, '@admin.com') && $this->hasVerifiedEmail();
+    //     return true;
+    // }
 }
