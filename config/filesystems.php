@@ -7,24 +7,19 @@ return [
     | Default Filesystem Disk
     |--------------------------------------------------------------------------
     |
-    | Here you may specify the default filesystem disk that should be used
-    | by the framework. The "local" disk, as well as a variety of cloud
-    | based disks are available to your application for file storage.
+    | We're using the 'public' disk temporarily for debugging uploads.
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    'default' => env('FILESYSTEM_DISK', 'public'), // ⬅️ Set to 'public'
 
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |
-    | Below you may configure as many filesystem disks as necessary, and you
-    | may even configure multiple disks for the same driver. Examples for
-    | most supported storage drivers are configured here for reference.
-    |
-    | Supported drivers: "local", "ftp", "sftp", "s3"
+    | You may configure as many disks as you like.
+    | 'public' disk stores files in storage/app/public and is web accessible.
     |
     */
 
@@ -32,14 +27,14 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'), // <-- Pastikan ini benar
+            'root' => storage_path('app'),
             'throw' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . '/storage',
+            'root' => storage_path('app/public'), // ⬅️ Files will be saved here
+            'url' => env('APP_URL') . '/storage', // ⬅️ Public URL
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
@@ -57,6 +52,7 @@ return [
             'throw' => false,
             'report' => false,
         ],
+
         'cloudinary' => [
             'driver' => 'cloudinary',
             'cloud' => env('CLOUDINARY_CLOUD_NAME'),
@@ -71,14 +67,12 @@ return [
     | Symbolic Links
     |--------------------------------------------------------------------------
     |
-    | Here you may configure the symbolic links that will be created when the
-    | `storage:link` Artisan command is executed. The array keys should be
-    | the locations of the links and the values should be their targets.
+    | Required to expose public storage: `php artisan storage:link`
     |
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/public'), // ⬅️ Symlink for public access
     ],
 
 ];
